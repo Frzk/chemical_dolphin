@@ -138,6 +138,10 @@ function install_composer_deps() {
               apt_deps="libaio-dev"
             fi
 
+			if [[ "${ext}" = "imap" ]]; then
+				apt_deps="libc-client-dev libssl-dev"
+			fi
+
             if [ -n "$apt_deps" ] ; then
               echo "Installing dependencies for ${ext}: ${apt_deps}" | indent
               install_env_file="$(apt_install "${apt_deps}" "${BUILD_DIR}" "${CACHE_DIR}" "${ENV_DIR}")"
