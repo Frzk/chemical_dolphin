@@ -139,7 +139,7 @@ function install_composer_deps() {
             fi
 
 			if [[ "${ext}" = "imap" ]]; then
-				apt_deps="libc-client-dev libssl-dev"
+				apt_deps="libc-client-dev libssl-dev libkrb5-dev"
 			fi
 
             if [ -n "$apt_deps" ] ; then
