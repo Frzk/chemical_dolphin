@@ -141,10 +141,10 @@ function install_composer_deps() {
 			if [[ "${ext}" = "imap" ]]; then
 				apt_deps="libc-client-dev libkrb5-dev"
 
-				CPPFLAGS="I${BUILD_DIR}/.apt/usr/include/c-client"
+				CPPFLAGS="-I${BUILD_DIR}/.apt/usr/include/c-client"
 				export CPPFLAGS
 
-				LDFLAGS="L${BUILD_DIR}/.apt/usr/lib -Wl,-rpath,${BUILD_DIR}/.apt/usr/lib"
+				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib -Wl,-rpath,${BUILD_DIR}/.apt/usr/lib"
 				export LDFLAGS
 			fi
 
