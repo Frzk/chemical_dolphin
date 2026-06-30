@@ -42,7 +42,12 @@ function install_pecl_extension() {
 
     readonly configure_log_file=$(mktemp "/tmp/pecl-configure-${extension_name}-XXXX.log")
     ./configure --with-php-config=/app/vendor/php/bin/php-config $flags > "${configure_log_file}" 2>&1
-    [ $? -eq 0 ] || install_pecl_error "${extension_name}" "configure build" "${configure_log_file}"
+    err="${?}"
+
+    grep -A50 -B10 "checking whether the C compiler works" "${configure_log_file}"
+    # /tmp/php-pecl-extension-xm0h/imap-1.0.3/config.log
+
+    [ $err -eq 0 ] || install_pecl_error "${extension_name}" "configure build" "${configure_log_file}"
 
     readonly make_log_file=$(mktemp "/tmp/pecl-make-${extension_name}-XXXX.log")
     make -j 2 > "${make_log_file}" 2>&1
