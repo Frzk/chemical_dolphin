@@ -180,7 +180,7 @@ function install_composer_deps() {
 				#readlink -f "$KRB5_LIBDIR"/libgssapi_krb5.so
 				#cat "$KRB5_LIBDIR"/libgssapi_krb5.so 2>/dev/null | head
 
-				ls -l "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2.2"
+				# ls -l "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2.2"
 				find "${BUILD_DIR}/.apt" -name 'libgssapi_krb5.so*' -ls
 
 
