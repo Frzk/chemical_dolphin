@@ -141,19 +141,11 @@ function install_composer_deps() {
 			if [[ "${ext}" = "imap" ]]; then
 				apt_deps="libc-client-dev libkrb5-dev"
 
-				CPPFLAGS="-I${BUILD_DIR}/.apt/usr/include/c-client"
+				CPPFLAGS="-I/build/.apt/usr/include/c-client"
 				export CPPFLAGS
 
-				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib -L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu"
+				LDFLAGS="-L/build/.apt/usr/lib -L/build/.apt/usr/lib/x86_64-linux-gnu"
 				export LDFLAGS
-
-				LIBRARY_PATH="${HOME}/.apt/usr/lib/x86_64-linux-gnu:${HOME}/.apt/usr/lib:${LIBRARY_PATH:-}"
-				export LIBRARY_PATH
-				LD_LIBRARY_PATH="${HOME}/.apt/usr/lib/x86_64-linux-gnu:${HOME}/.apt/usr/lib:${LD_LIBRARY_PATH:-}"
-				export LD_LIBRARY_PATH
-
-				echo "LIBRARY_PATH: ${LIBRARY_PATH}"
-				echo "LD_LIBRARY_PATH: ${LD_LIBRARY_PATH}"
 			fi
 
 			if [[ -n "${apt_deps}" ]]; then
@@ -188,6 +180,7 @@ function install_composer_deps() {
               echo "Installing PHP extension: ${ext}" | indent
               fetch_package "${PHP_BASE_URL}" "${extension_package_path}" "/app/vendor/php"
             else
+				find "/build" -name 'libgssapi_krb5.so*' -o -name 'libkrb5.so*' -o -name 'libk5crypto.so*'
               install_pecl_extension "${ext}" "${ext_version}" "${CACHE_DIR}"
             fi
         done
