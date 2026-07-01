@@ -144,7 +144,7 @@ function install_composer_deps() {
 				CPPFLAGS="-I${BUILD_DIR}/.apt/usr/include/c-client ${CPPFLAGS:-}"
 				export CPPFLAGS
 
-				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS:-}"
+				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/mit-krb5 -L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu -L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS}"
 				export LDFLAGS
 			fi
 
