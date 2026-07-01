@@ -146,24 +146,14 @@ function install_composer_deps() {
 
 				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu -L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS}"
 				export LDFLAGS
-
-				#export PKG_CONFIG_PATH="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:${BUILD_DIR}/.apt/usr/lib/pkgconfig"
 			fi
 
 			if [[ -n "${apt_deps}" ]]; then
 				echo "Installing dependencies for ${ext}: ${apt_deps}" | indent
-				for dep in ${apt_deps}; do
-					echo "Installing ${dep}" | indent
-					install_env_file="$(apt_install "${dep}" "${BUILD_DIR}" "${CACHE_DIR}" "${ENV_DIR}")"
-					# Source environment to export LD_LIBRARY_PATH
-					source "${install_env_file}"
-					rm "${install_env_file}"
-				done
-			fi
-
-			if [[ "${ext}" = "imap" ]]; then
-				# find "${BUILD_DIR}/.apt" -name 'libgssapi_krb5.so*' -ls
-				echo
+				install_env_file="$(apt_install "${apt_deps}" "${BUILD_DIR}" "${CACHE_DIR}" "${ENV_DIR}")"
+				# Source environment to export LD_LIBRARY_PATH
+				source "${install_env_file}"
+				rm "${install_env_file}"
 			fi
 
             # Install third-party dependencies after ubuntu packages have been added
