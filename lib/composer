@@ -144,14 +144,10 @@ function install_composer_deps() {
 				CPPFLAGS="-I${BUILD_DIR}/.apt/usr/include/c-client ${CPPFLAGS:-}"
 				export CPPFLAGS
 
-				#PKG_CONFIG_PATH="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:${BUILD_DIR}/.apt/usr/lib/pkgconfig:${PKG_CONFIG_PATH}"
-				#export PKG_CONFIG_PATH
+				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu -L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS}"
+				export LDFLAGS
 
-				#LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/mit-krb5 -L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu -L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS}"
-				#export LDFLAGS
-
-				export LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu -L${BUILD_DIR}/.apt/usr/lib"
-				export PKG_CONFIG_PATH="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:${BUILD_DIR}/.apt/usr/lib/pkgconfig"
+				#export PKG_CONFIG_PATH="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:${BUILD_DIR}/.apt/usr/lib/pkgconfig"
 			fi
 
 			if [[ -n "${apt_deps}" ]]; then
@@ -161,29 +157,13 @@ function install_composer_deps() {
 					install_env_file="$(apt_install "${dep}" "${BUILD_DIR}" "${CACHE_DIR}" "${ENV_DIR}")"
 					# Source environment to export LD_LIBRARY_PATH
 					source "${install_env_file}"
-					printenv LD_LIBRARY_PATH
 					rm "${install_env_file}"
 				done
 			fi
 
 			if [[ "${ext}" = "imap" ]]; then
-				#find "${BUILD_DIR}/.apt/usr/lib" -name 'libkrb5.so*' -o -name 'libgssapi_krb5.so*' -o -name 'libk5crypto.so*'
-				
-				#echo "Content of ${BUILD_DIR}/.apt/usr/lib:"
-				#ls -al "${BUILD_DIR}/.apt/usr/lib"
-				# ls -al "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu"
-				# ls -al "/usr/lib"
-				# ls -al "/usr/lib/x86_64-linux-gnu"
-
-				#KRB5_LIBDIR="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/mit-krb5"
-				#file "$KRB5_LIBDIR"/libgssapi_krb5.so
-				#readlink -f "$KRB5_LIBDIR"/libgssapi_krb5.so
-				#cat "$KRB5_LIBDIR"/libgssapi_krb5.so 2>/dev/null | head
-
-				# ls -l "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2.2"
-				find "${BUILD_DIR}/.apt" -name 'libgssapi_krb5.so*' -ls
-
-
+				# find "${BUILD_DIR}/.apt" -name 'libgssapi_krb5.so*' -ls
+				echo
 			fi
 
             # Install third-party dependencies after ubuntu packages have been added
