@@ -144,6 +144,9 @@ function install_composer_deps() {
 				CPPFLAGS="-I${BUILD_DIR}/.apt/usr/include/c-client ${CPPFLAGS:-}"
 				export CPPFLAGS
 
+				PKG_CONFIG_PATH="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:${BUILD_DIR}/.apt/usr/lib/pkgconfig:${PKG_CONFIG_PATH}"
+				export PKG_CONFIG_PATH
+
 				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/mit-krb5 -L${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu -L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS}"
 				export LDFLAGS
 			fi
@@ -161,10 +164,13 @@ function install_composer_deps() {
 			fi
 
 			if [[ "${ext}" = "imap" ]]; then
+				find "${BUILD_DIR}/.apt/usr/lib" -name 'libkrb5.so*' -o -name 'libgssapi_krb5.so*' -o -name 'libk5crypto.so*'
+				
+				echo "Content of ${BUILD_DIR}/.apt/usr/lib:"
 				ls -al "${BUILD_DIR}/.apt/usr/lib"
-				ls -al "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu"
-				ls -al "/usr/lib"
-				ls -al "/usr/lib/x86_64-linux-gnu"
+				# ls -al "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu"
+				# ls -al "/usr/lib"
+				# ls -al "/usr/lib/x86_64-linux-gnu"
 			fi
 
             # Install third-party dependencies after ubuntu packages have been added
