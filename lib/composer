@@ -151,9 +151,11 @@ function install_composer_deps() {
 			if [[ -n "${apt_deps}" ]]; then
 				echo "Installing dependencies for ${ext}: ${apt_deps}" | indent
 				for dep in ${apt_deps}; do
+					echo "Installing ${dep}" | indent
 					install_env_file="$(apt_install "${dep}" "${BUILD_DIR}" "${CACHE_DIR}" "${ENV_DIR}")"
 					# Source environment to export LD_LIBRARY_PATH
 					source "${install_env_file}"
+					printenv LD_LIBRARY_PATH
 					rm "${install_env_file}"
 				done
 			fi
