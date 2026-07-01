@@ -139,7 +139,7 @@ function install_composer_deps() {
             fi
 
 			if [[ "${ext}" = "imap" ]]; then
-				apt_deps="libc-client-dev libgssapi-krb5-2 libkrb5-dev libkrb5-3 libk5crypto3 libcom-err2 libssl-dev"
+				apt_deps="libc-client-dev libkrb5-dev libssl-dev"
 
 				CPPFLAGS="-I${BUILD_DIR}/.apt/usr/include/c-client ${CPPFLAGS:-}"
 				export CPPFLAGS
@@ -167,18 +167,23 @@ function install_composer_deps() {
 			fi
 
 			if [[ "${ext}" = "imap" ]]; then
-				find "${BUILD_DIR}/.apt/usr/lib" -name 'libkrb5.so*' -o -name 'libgssapi_krb5.so*' -o -name 'libk5crypto.so*'
+				#find "${BUILD_DIR}/.apt/usr/lib" -name 'libkrb5.so*' -o -name 'libgssapi_krb5.so*' -o -name 'libk5crypto.so*'
 				
-				echo "Content of ${BUILD_DIR}/.apt/usr/lib:"
-				ls -al "${BUILD_DIR}/.apt/usr/lib"
+				#echo "Content of ${BUILD_DIR}/.apt/usr/lib:"
+				#ls -al "${BUILD_DIR}/.apt/usr/lib"
 				# ls -al "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu"
 				# ls -al "/usr/lib"
 				# ls -al "/usr/lib/x86_64-linux-gnu"
 
-				KRB5_LIBDIR="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/mit-krb5"
-				file "$KRB5_LIBDIR"/libgssapi_krb5.so
-				readlink -f "$KRB5_LIBDIR"/libgssapi_krb5.so
-				cat "$KRB5_LIBDIR"/libgssapi_krb5.so 2>/dev/null | head
+				#KRB5_LIBDIR="${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/mit-krb5"
+				#file "$KRB5_LIBDIR"/libgssapi_krb5.so
+				#readlink -f "$KRB5_LIBDIR"/libgssapi_krb5.so
+				#cat "$KRB5_LIBDIR"/libgssapi_krb5.so 2>/dev/null | head
+
+				ls -l "${BUILD_DIR}/.apt/usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2.2"
+				find "${BUILD_DIR}/.apt" -name 'libgssapi_krb5.so*' -ls
+
+
 			fi
 
             # Install third-party dependencies after ubuntu packages have been added
