@@ -146,6 +146,9 @@ function install_composer_deps() {
 
 				LDFLAGS="-L${BUILD_DIR}/.apt/usr/lib ${LDFLAGS:-}"
 				export LDFLAGS
+
+				ls -al "${BUILD_DIR}/.apt/usr/include/c-client"
+				ls -al "${BUILD_DIR}/.apt/usr/lib"
 			fi
 
 			if [[ -n "${apt_deps}" ]]; then
