@@ -44,7 +44,7 @@ function install_pecl_extension() {
     ./configure --with-php-config=/app/vendor/php/bin/php-config $flags > "${configure_log_file}" 2>&1
     err="${?}"
 
-    grep -n -A60 -B20 "checking whether the C compiler works" config.log
+    grep -n -A80 -B20 "checking whether build with IMAP works" config.log
     # /tmp/php-pecl-extension-xm0h/imap-1.0.3/config.log
 
     [ $err -eq 0 ] || install_pecl_error "${extension_name}" "configure build" "${configure_log_file}"
